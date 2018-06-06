@@ -99,6 +99,7 @@ function ExtrudeBufferGeometry( shapes, options ) {
 		var bevelThickness = options.bevelThickness !== undefined ? options.bevelThickness : 6;
 		var bevelSize = options.bevelSize !== undefined ? options.bevelSize : bevelThickness - 2;
 		var bevelSegments = options.bevelSegments !== undefined ? options.bevelSegments : 3;
+		var bevelNegative = options.bevelNegative !== undefined ? options.bevelNegative : false;
 
 		var extrudePath = options.extrudePath;
 
@@ -364,7 +365,6 @@ function ExtrudeBufferGeometry( shapes, options ) {
 
 		}
 
-
 		// Loop bevelSegments, 1 for the front, 1 for the back
 
 		for ( b = 0; b < bevelSegments; b ++ ) {
@@ -374,6 +374,9 @@ function ExtrudeBufferGeometry( shapes, options ) {
 			t = b / bevelSegments;
 			z = bevelThickness * Math.cos( t * Math.PI / 2 );
 			bs = bevelSize * Math.sin( t * Math.PI / 2 );
+			if ( bevelNegative ) {
+				bs -= bevelSize;
+			}
 
 			// contract shape
 
@@ -404,7 +407,7 @@ function ExtrudeBufferGeometry( shapes, options ) {
 
 		}
 
-		bs = bevelSize;
+		bs = ( bevelNegative ? 0 : bevelSize );
 
 		// Back facing vertices
 
@@ -472,6 +475,9 @@ function ExtrudeBufferGeometry( shapes, options ) {
 			t = b / bevelSegments;
 			z = bevelThickness * Math.cos( t * Math.PI / 2 );
 			bs = bevelSize * Math.sin( t * Math.PI / 2 );
+			if ( bevelNegative ) {
+				bs -= bevelSize;
+			}
 
 			// contract shape
 
