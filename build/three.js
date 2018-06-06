@@ -27638,6 +27638,7 @@
 			var bevelThickness = options.bevelThickness !== undefined ? options.bevelThickness : 6;
 			var bevelSize = options.bevelSize !== undefined ? options.bevelSize : bevelThickness - 2;
 			var bevelSegments = options.bevelSegments !== undefined ? options.bevelSegments : 3;
+			var bevelNegative = options.bevelNegative !== undefined ? options.bevelNegative : false;
 
 			var extrudePath = options.extrudePath;
 
@@ -27903,7 +27904,6 @@
 
 			}
 
-
 			// Loop bevelSegments, 1 for the front, 1 for the back
 
 			for ( b = 0; b < bevelSegments; b ++ ) {
@@ -27913,6 +27913,9 @@
 				t = b / bevelSegments;
 				z = bevelThickness * Math.cos( t * Math.PI / 2 );
 				bs = bevelSize * Math.sin( t * Math.PI / 2 );
+				if ( bevelNegative ) {
+					bs -= bevelSize;
+				}
 
 				// contract shape
 
@@ -27943,7 +27946,7 @@
 
 			}
 
-			bs = bevelSize;
+			bs = ( bevelNegative ? 0 : bevelSize );
 
 			// Back facing vertices
 
@@ -28011,6 +28014,9 @@
 				t = b / bevelSegments;
 				z = bevelThickness * Math.cos( t * Math.PI / 2 );
 				bs = bevelSize * Math.sin( t * Math.PI / 2 );
+				if ( bevelNegative ) {
+					bs -= bevelSize;
+				}
 
 				// contract shape
 
@@ -29641,7 +29647,7 @@
 
 
 
-	var Geometries = Object.freeze({
+	var Geometries = /*#__PURE__*/Object.freeze({
 		WireframeGeometry: WireframeGeometry,
 		ParametricGeometry: ParametricGeometry,
 		ParametricBufferGeometry: ParametricBufferGeometry,
@@ -30411,7 +30417,7 @@
 
 
 
-	var Materials = Object.freeze({
+	var Materials = /*#__PURE__*/Object.freeze({
 		ShadowMaterial: ShadowMaterial,
 		SpriteMaterial: SpriteMaterial,
 		RawShaderMaterial: RawShaderMaterial,
@@ -31101,6 +31107,7 @@
 	 * @author mrdoob / http://mrdoob.com/
 	 */
 
+
 	function ImageLoader( manager ) {
 
 		this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
@@ -31202,6 +31209,7 @@
 	 * @author mrdoob / http://mrdoob.com/
 	 */
 
+
 	function CubeTextureLoader( manager ) {
 
 		this.manager = ( manager !== undefined ) ? manager : DefaultLoadingManager;
@@ -31271,6 +31279,7 @@
 	/**
 	 * @author mrdoob / http://mrdoob.com/
 	 */
+
 
 	function TextureLoader( manager ) {
 
@@ -31992,9 +32001,7 @@
 	//
 
 	var tmp = new Vector3();
-	var px = new CubicPoly();
-	var py = new CubicPoly();
-	var pz = new CubicPoly();
+	var px = new CubicPoly(), py = new CubicPoly(), pz = new CubicPoly();
 
 	function CatmullRomCurve3( points, closed, curveType, tension ) {
 
@@ -32779,7 +32786,7 @@
 
 
 
-	var Curves = Object.freeze({
+	var Curves = /*#__PURE__*/Object.freeze({
 		ArcCurve: ArcCurve,
 		CatmullRomCurve3: CatmullRomCurve3,
 		CubicBezierCurve: CubicBezierCurve,
@@ -37517,6 +37524,7 @@
 	 * @author thespite / http://clicktorelease.com/
 	 */
 
+
 	function ImageBitmapLoader( manager ) {
 
 		if ( typeof createImageBitmap === 'undefined' ) {
@@ -37899,6 +37907,7 @@
 	 * @author zz85 / http://www.lab4games.net/zz85/blog
 	 * @author mrdoob / http://mrdoob.com/
 	 */
+
 
 	function Font( data ) {
 
@@ -43926,8 +43935,7 @@
 	 *  headWidth - Number
 	 */
 
-	var lineGeometry;
-	var coneGeometry;
+	var lineGeometry, coneGeometry;
 
 	function ArrowHelper( dir, origin, length, color, headLength, headWidth ) {
 
