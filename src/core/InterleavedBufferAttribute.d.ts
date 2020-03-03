@@ -22,7 +22,7 @@ export class InterleavedBufferAttribute {
 	count: number;
 	array: ArrayLike<number>;
 
-	isInterleavedBufferAttribute: true;
+	readonly isInterleavedBufferAttribute: true;
 
 	applyMatrix4( m: Matrix4 ): this;
 	getX( index: number ): number;

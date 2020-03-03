@@ -21,7 +21,7 @@ export class BufferAttribute {
 	// set needsUpdate( value: boolean );
 	needsUpdate: boolean;
 
-	isBufferAttribute: true;
+	readonly isBufferAttribute: true;
 
 	onUploadCallback: () => void;
 	onUpload( callback: () => void ): this;
